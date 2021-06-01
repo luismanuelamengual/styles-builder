@@ -2,6 +2,7 @@ import arg from 'arg';
 import fs from 'fs-extra';
 import path from 'path';
 import sass from 'node-sass';
+import gaze from 'gaze';
 
 function parseArgumentsIntoOptions(rawArgs) {
     const args = arg(
@@ -26,14 +27,15 @@ function parseArgumentsIntoOptions(rawArgs) {
     return { watch, source, destination, type };
 }
 
-function transformSassFiles(file, options, pattern) {
+function transformSassFiles(options, file) {
+    file = file || options.source;
     const stat = fs.statSync(file);
     if (stat.isDirectory()) {
         fs.readdirSync(file).forEach((subDirectory) => {
             const subDirectoryToSearch = path.resolve(file, subDirectory);
-            transformSassFiles(subDirectoryToSearch, options, pattern);
+            transformSassFiles(options, subDirectoryToSearch);
         });
-    } else if (stat.isFile() && file.endsWith(pattern)) {
+    } else if (stat.isFile() && file.endsWith(".scss")) {
         console.log(`Reading file "${file}" ..`);
         try {
             const srcDirectory = options.source;
@@ -51,12 +53,25 @@ function transformSassFiles(file, options, pattern) {
     }
 }
 
+function watchSassFiles(options) {
+    transformSassFiles(options);
+    gaze(options.source + '/**/*.scss', function(err, watcher) {
+        const watched = this.watched();
+        this.on('changed', function(filepath) {
+            transformSassFiles(options, filepath);
+        });
+        this.on('added', function(filepath) {
+            transformSassFiles(options, filepath);
+        });
+    });
+}
+
 export function stylesBuilder(args) {
-    console.log('STYLES BUILDER !!');
+    console.log('---- STYLES BUILDER ----');
     let options = parseArgumentsIntoOptions(args);
     if (options.watch) {
-        console.log('WATCH !!');
+        watchSassFiles(options);
     } else {
-        transformSassFiles(options.source, options, ".scss");
+        transformSassFiles(options);
     }
 }
