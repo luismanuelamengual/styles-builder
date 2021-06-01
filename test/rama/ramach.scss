@@ -1,0 +1,7 @@
+.panel {
+    border: 2px solid green;
+
+    & .hidden {
+        visibility: hidden;
+    }
+}

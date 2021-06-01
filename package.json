@@ -1,0 +1,29 @@
+{
+    "name": "styles-builder",
+    "version": "0.0.3",
+    "author": "Luis Amengual",
+    "description": "Styles builder",
+    "repository": "https://github.com/luismanuelamengual/styles-builder",
+    "license": "MIT",
+    "keywords": [
+        "sass",
+        "javascript",
+        "web",
+        "modules"
+    ],
+    "main": "lib/index.js",
+    "typings": "./lib/types/index.d.ts",
+    "bin": {
+        "styles-builder": "bin/styles-builder"
+    },
+    "scripts": {
+        "test": "styles-builder"
+    },
+    "dependencies": {
+        "arg": "^5.0.0",
+        "esm": "^3.2.25",
+        "fs-extra": "^10.0.0",
+        "node-sass": "^6.0.0",
+        "path": "^0.12.7"
+    }
+}
