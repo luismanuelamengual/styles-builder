@@ -9,11 +9,11 @@ function parseArgumentsIntoOptions(rawArgs) {
         {
             '--watch': Boolean,
             '--src': String,
-            '--dest': String,
+            '--dist': String,
             '--type': String,
             '-w': '--watch',
             '-s': '--src',
-            '-d': '--dest',
+            '-d': '--dist',
             '-t': '--type'
         },
         {
@@ -22,7 +22,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     );
     const watch = args['--watch'] || false;
     const source = args['--src'] || process.cwd();
-    const destination = args['--dest'] || source;
+    const destination = args['--dist'] || source;
     const type = args['--type'] || 'compressed';
     return { watch, source, destination, type };
 }
@@ -48,7 +48,7 @@ function transformSassFiles(options, file) {
                 console.log(`Successfully created file "${outputFile}" ..`);
             }
         } catch (e) {
-            console.log(`Error creating file "${outputFile}" ..`);
+            console.log(e);
         }
     }
 }
