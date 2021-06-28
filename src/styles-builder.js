@@ -21,8 +21,8 @@ function parseArgumentsIntoOptions(rawArgs) {
         }
     );
     const watch = args['--watch'] || false;
-    const source = args['--src'] || process.cwd();
-    const destination = args['--dist'] || source;
+    const source = (args['--src'] || process.cwd()).replaceAll('/', path.sep);
+    const destination = (args['--dist'] || source).replaceAll('/', path.sep);
     const type = args['--type'] || 'compressed';
     return { watch, source, destination, type };
 }
