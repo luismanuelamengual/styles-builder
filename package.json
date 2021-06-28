@@ -1,6 +1,6 @@
 {
     "name": "styles-builder",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Luis Amengual",
     "description": "Styles builder",
     "repository": "https://github.com/luismanuelamengual/styles-builder",
@@ -16,7 +16,7 @@
         "styles-builder": "bin/styles-builder"
     },
     "scripts": {
-        "test": "styles-builder"
+        "test": "styles-builder --src test"
     },
     "dependencies": {
         "arg": "^5.0.0",

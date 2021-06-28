@@ -40,7 +40,7 @@ function transformSassFiles(options, file) {
         try {
             const srcDirectory = options.source;
             const distDirectory = options.destination;
-            const outputFile = path.resolve(__dirname, distDirectory,`${file.replace(`/${srcDirectory}/`,`/${distDirectory}/`)}.js`);
+            const outputFile = path.resolve(__dirname, distDirectory,`${file.replace(path.sep + `${srcDirectory}` + path.sep, path.sep + `${distDirectory}` + path.sep)}.js`);
             const result = sass.renderSync({file: file, outputStyle: options.type});
             if (!result.error) {
                 const content = `const styles = \`${result.css.toString()}\`; export default styles;`
